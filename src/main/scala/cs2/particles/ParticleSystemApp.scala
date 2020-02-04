@@ -15,11 +15,13 @@ object ParticleSystemApp extends JFXApp {
             content = canvas
             val g = canvas.graphicsContext2D
 
-            val p = new Particle(new Vec2(200,200), new Vec2(1,1))
+            val p = new ParticleSystem(new Vec2(200,200))
             
             val timer = AnimationTimer(t => {
                 g.setFill(Color.White)
                 g.fillRect(0,0, 600,600)
+                p.addParticle()
+                p.applyForce(new Vec2(0,0.1))
                 p.display(g)
                 p.timeStep
             })

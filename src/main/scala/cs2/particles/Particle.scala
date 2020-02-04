@@ -4,16 +4,18 @@ import cs2.util.Vec2
 import scalafx.scene.canvas.GraphicsContext
 import scalafx.scene.paint.Color
 
-class Particle(var pos:Vec2, var vel:Vec2) {
-    var r = 10.0
+abstract class Particle(protected var pos:Vec2, private var vel:Vec2) {
+    protected var r = 10.0
+    protected var col = Color.Black
 
-    def display(g:GraphicsContext):Unit = {
-        g.setFill(Color.DeepPink)
-        g.fillOval(pos.x-r,pos.y-r, r*2,r*2)
-    }
+    def display(g:GraphicsContext):Unit
 
     def timeStep():Unit = {
         pos += vel
+    }
+
+    def applyForce(acc:Vec2):Unit = {
+        vel += acc
     }
 
 }
