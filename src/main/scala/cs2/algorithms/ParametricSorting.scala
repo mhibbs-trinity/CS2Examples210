@@ -32,12 +32,22 @@ object ParametricSorting {
         override def compare(other:Student):Int = {
             first.compare(other.first)
         }
+        override def toString():String = first
     }
 
     def main(args:Array[String]):Unit = {
         val a:Array[Double] = Array.fill(10)(math.random)
         val b:Array[Char] = Array.fill(10)(Random.nextPrintableChar)
         
+        val c:Array[Student] = Array(new Student("Sally", 123, 4.0),
+                                     new Student("Bob", 432, 3.2),
+                                     new Student("Cindy", 512, 2.6))
+        
+        println(c.mkString(", "))
+        bubbleSort(c, (x:Student,y:Student) => x.gpa > y.gpa)
+        println(c.mkString(", "))
+        
+        /*
         println(a.mkString)
         bubbleSort(a, (x:Double,y:Double) => x > y)
         println(a.mkString)
@@ -45,6 +55,6 @@ object ParametricSorting {
         println(b.mkString)
         bubbleSort(b)
         println(b.mkString)
-
+        */
     }
 }
