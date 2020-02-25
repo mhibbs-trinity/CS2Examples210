@@ -4,10 +4,10 @@ import org.junit._
 import org.junit.Assert._
 
 class StackTester {
-    var s:ArrayStack[Int] = null
+    var s:Stack[Int] = null
 
     @Before def initializeStack() {
-        s = new ArrayStack[Int] ()
+        s = Stack[Int]()
     }
 
     @Test def checkIsEmptyWithEmpty() {
