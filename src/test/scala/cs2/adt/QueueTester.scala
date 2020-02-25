@@ -22,7 +22,7 @@ class QueueTester {
         for(i <- 1 to 100) {
             q.enqueue(i)
         }
-        for(i <- 100 to 1 by -1) {
+        for(i <- 1 to 100) {
             assertTrue(q.peek == i)
             assertTrue(q.dequeue == i)
         }
@@ -33,15 +33,15 @@ class QueueTester {
         for(i <- 1 to 100) {
             q.enqueue(i)
         }
-        for(i <- 100 to 50 by -1) {
+        for(i <- 1 to 50) {
             assertTrue(q.peek == i)
             assertTrue(q.dequeue == i)
         }
         //insertions into a queue after some removals
-        for(i <- 51 to 150) {
+        for(i <- 101 to 150) {
             q.enqueue(i)
         }
-        for(i <- 150 to 1 by -1) {
+        for(i <- 51 to 150) {
             assertTrue(q.peek == i)
             assertTrue(q.dequeue == i)
         }
@@ -50,7 +50,7 @@ class QueueTester {
         for(i <- 1 to 20) {
             q.enqueue(i)
         }
-        for(i <- 20 to 1 by -1) {
+        for(i <- 1 to 20) {
             assertTrue(q.peek == i)
             assertTrue(q.dequeue == i)
         }
