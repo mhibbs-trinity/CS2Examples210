@@ -7,9 +7,17 @@ class LinkedSeq[A] extends Seq[A] with Iterable[A] {
             for(i <- 1 to idx) rover = rover.next
             rover
         }
+        override def toString():String = {
+            if(next != null) data.toString + "," + next.toString
+            else data.toString
+        }
     }
     private var myHead:Node = null
     private var len:Int = 0
+
+    def print():Unit = {
+        println("(" + myHead.toString + ")")
+    }
 
     def length():Int = len
 
@@ -77,6 +85,8 @@ object SeqStuff {
         it.foreach(print)
 
         seq.foreach(print)
+
+        seq.print()
 
     }
 }

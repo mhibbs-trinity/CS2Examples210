@@ -1,6 +1,6 @@
 package cs2.adt
 
-class DoubleLinkedSeq[A:Manifest] extends Seq[A] {
+class DoubleLinkedSeq[A:Manifest] extends Seq[A] with Iterable[A] {
     private class Node(var data:A, var prev:Node, var next:Node) {
         def getNodeByIndex(idx:Int):Node = {
             if(idx >= 0 && idx < len) {
@@ -10,8 +10,28 @@ class DoubleLinkedSeq[A:Manifest] extends Seq[A] {
             } else end
         }
     }
+    class BidirectionalIterator extends scala.collection.Iterator[A] {
+        private var rover:Node = end.next
+        def next():A = {
+            val x:A = rover.data
+            rover = rover.next
+            x
+        }
+        def hasNext():Boolean = rover != end
+        def previous():A = {
+            val x:A = rover.data
+            rover = rover.prev
+            x
+        }
+        def hasPrevious():Boolean = rover != end
+    }
+
     private var end:Node = new Node(new Array[A](1)(0) ,end,end)
     private var len:Int = 0
+
+    def iterator():BidirectionalIterator = {
+        new BidirectionalIterator()
+    }
 
     def get(idx:Int):A = end.next.getNodeByIndex(idx).data
     def set(idx:Int, elem:A):Unit = {
@@ -31,6 +51,6 @@ class DoubleLinkedSeq[A:Manifest] extends Seq[A] {
         rover.data
     }
 
-    def length():Int = ???
+    def length():Int = len
 
 }
