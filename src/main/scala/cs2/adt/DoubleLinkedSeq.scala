@@ -43,6 +43,12 @@ class DoubleLinkedSeq[A:Manifest] extends Seq[A] with Iterable[A] {
         rover.next = new Node(elem, rover, rover.next)
         rover.next.next.prev = rover.next
     }
+    override def append(elem:A):Unit = {
+        len += 1
+        var rover = end.prev
+        rover.next = new Node(elem, rover, rover.next)
+        rover.next.next.prev = rover.next
+    }
     def remove(idx:Int):A = {
         len -= 1
         var rover = end.next.getNodeByIndex(idx)
