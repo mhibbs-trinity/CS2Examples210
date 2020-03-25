@@ -27,4 +27,16 @@ object QuickSorting {
         result
     }
 
+    def main(args:Array[String]) {
+        val s = new DoubleLinkedSeq[Int]()
+        for(i <- 1 to 10) s.append((math.random * 100).toInt)
+
+        for(i <- 0 until s.length) print(s(i) + ",")
+        println()
+
+        val ss = quickSort(s)
+        for(i <- 0 until ss.length) print(ss(i) + ",")
+        println()
+    }    
+
 }

@@ -27,6 +27,8 @@ class DoubleLinkedSeq[A:Manifest] extends Seq[A] with Iterable[A] {
     }
 
     private var end:Node = new Node(new Array[A](1)(0) ,end,end)
+    end.next = end
+    end.prev = end
     private var len:Int = 0
 
     def iterator():BidirectionalIterator = {
@@ -50,10 +52,10 @@ class DoubleLinkedSeq[A:Manifest] extends Seq[A] with Iterable[A] {
         rover.next.next.prev = rover.next
     }
     def remove(idx:Int):A = {
-        len -= 1
         var rover = end.next.getNodeByIndex(idx)
         rover.prev.next = rover.next
         rover.next.prev = rover.prev
+        len -= 1
         rover.data
     }
 
