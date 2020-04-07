@@ -1,6 +1,6 @@
 package cs2.adt
 
-class BinarySearchTree[A <% Ordered[A]] {
+class BinarySearchTree[A <% Ordered[A]] extends Iterable[A] {
   private class Node(var data: A, var left: Node, var right: Node) {
     def contains(elem: A): Boolean = {
       if (data == elem) true
@@ -60,6 +60,25 @@ class BinarySearchTree[A <% Ordered[A]] {
 
   private var root: Node = null
 
+  def iterator():Iterator[A] = {
+    new Iterator[A] {
+      val stk = new LinkedStack[Node]()
+      var curr = root
+
+      def next():A = {
+        while(curr != null) {
+          stk.push(curr)
+          curr = curr.left
+        }
+        curr = stk.pop
+        val ret = curr.data
+        curr = curr.right
+        ret
+      }
+      def hasNext():Boolean = curr != null || !stk.isEmpty
+    }
+  }
+
   def getMax():A = {
     root.getMax
   }
@@ -83,7 +102,7 @@ class BinarySearchTree[A <% Ordered[A]] {
       if(root != null) root = root.remove(elem)
   }
 
-  def isEmpty():Boolean = root == null
+  override def isEmpty():Boolean = root == null
 
   def printPreOrder():Unit = {
     def processNode(curr:Node):Unit = {
@@ -142,6 +161,24 @@ class BinarySearchTree[A <% Ordered[A]] {
     }
     println
   }
+
+  def printInOrderStack():Unit = {
+    val stk = new LinkedStack[Node]()
+    var curr = root
+
+    while(curr != null || !stk.isEmpty) {
+      while(curr != null) {
+        stk.push(curr)
+        curr = curr.left
+      }
+      curr = stk.pop
+      print(curr.data + ", ")
+      curr = curr.right
+    }
+    println
+  }
+
+
 }
 
 object BinarySearchTree {
@@ -163,6 +200,12 @@ object BinarySearchTree {
     println
     bst.printPreOrderStack
     bst.printPreOrderQueue
+    bst.printInOrderStack
+
+    for(x <- bst) {
+      println(x)
+    }
+
   }
 }
 
