@@ -2,6 +2,7 @@ package cs2.parallel
 
 import cs2.util.TimeLogger
 import java.util.concurrent._
+import scala.collection.parallel.mutable.ParArray
 
 object FactorialComparison {
 
@@ -24,6 +25,11 @@ object FactorialComparison {
         (one to n).reduce(_*_)
     }
 
+    def factParCollect(n:BigInt):BigInt = {
+        val one:BigInt = 1
+        (one to n).par.reduce(_*_)
+    }
+
     def factExecutor(n:BigInt, k:Int):BigInt = {
         val service = java.util.concurrent.Executors.newCachedThreadPool
         val futures = Array.tabulate(k)((i:Int) => {
@@ -41,6 +47,14 @@ object FactorialComparison {
     def main(args:Array[String]):Unit = {
         val logger = new TimeLogger
 
+        val a = (Array.fill(100)(1)).par
+        var x = 0
+        for(i <- a) {
+            x += i
+        }
+        println(x)
+        println(a.sum)
+
         val n:BigInt = 100000
 
         logger.restart
@@ -55,7 +69,11 @@ object FactorialComparison {
         factCollect(n)
         logger.log("factCollt")
 
-        for(i <- 1 to 30) {
+        logger.restart
+        factParCollect(n)
+        logger.log("factPar  ")
+
+        for(i <- 10 to 10) {
             logger.restart
             factExecutor(n, i)
             logger.log("factExect " + i)
