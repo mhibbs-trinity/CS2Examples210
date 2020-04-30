@@ -11,7 +11,7 @@ object ChatProgram {
             override def run() {
                 val is = new BufferedInputStream(sock.getInputStream)
                 var msg = ""
-                while(!sock.isClosed && msg != "EXIT") {
+                while(!sock.isClosed && msg != "EXIT\n") {
                     msg = ""
                     while(!sock.isClosed && is.available == 0) Thread.sleep(10)
                     var lastChar = ' '
@@ -32,7 +32,7 @@ object ChatProgram {
                 val os = new BufferedOutputStream(sock.getOutputStream)
                 val is = new BufferedInputStream(System.in)
                 var msg = ""
-                while(!sock.isClosed && msg != "EXIT") {
+                while(!sock.isClosed && msg != "EXIT\n") {
                     msg = ""
                     while(!sock.isClosed && is.available == 0) Thread.sleep(10)
                     var lastChar = 'Z'
