@@ -15,7 +15,7 @@ object ChatProgram {
                     msg = ""
                     while(!sock.isClosed && is.available == 0) Thread.sleep(10)
                     var lastChar = ' '
-                    while(is.available > 0 && lastChar != '\n') {
+                    while(!sock.isClosed && is.available > 0 && lastChar != '\n') {
                         lastChar = is.read.toChar
                         msg += lastChar
                     }
@@ -27,7 +27,29 @@ object ChatProgram {
     }
 
     def createOutputThread(sock:Socket):Thread = {
-
+        new Thread {
+            override def run() {
+                val os = new BufferedOutputStream(sock.getOutputStream)
+                val is = new BufferedInputStream(System.in)
+                var msg = ""
+                while(!sock.isClosed && msg != "EXIT") {
+                    msg = ""
+                    while(!sock.isClosed && is.available == 0) Thread.sleep(10)
+                    var lastChar = 'Z'
+                    while(!sock.isClosed && is.available > 0 && lastChar != '\n') {
+                        lastChar = is.read.toChar
+                        msg += lastChar
+                    }
+                    println(">> " + msg)
+                    if(!sock.isClosed) {
+                        for(c <- msg) os.write(c)
+                        os.flush
+                    }
+                }
+                os.close
+                is.close
+            }
+        }
     }
 
 
